@@ -13,10 +13,11 @@ class PostListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Posts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+        title: Text('Posts', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
         elevation: 0,
         backgroundColor: Colors.blueAccent,
-      ),      body: BlocProvider(
+      ),
+      body: BlocProvider(
         create: (context) => PostsBloc(ApiService())..add(FetchPosts()),
         child: BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
@@ -27,12 +28,10 @@ class PostListScreen extends StatelessWidget {
                 itemCount: state.posts.length,
                 itemBuilder: (context, index) {
                   final post = state.posts[index];
-
                   return VisibilityDetector(
                     key: Key(post.id.toString()),
                     onVisibilityChanged: (visibilityInfo) {
-                      final visiblePercentage =
-                          visibilityInfo.visibleFraction * 100;
+                      final visiblePercentage = visibilityInfo.visibleFraction * 100;
                       if (visiblePercentage > 50) {
                         post.timerController.start();
                       } else {
@@ -77,7 +76,6 @@ class PostListScreen extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.blue,
                                         ),
-
                                       ),
                                     ],
                                   ),
@@ -108,7 +106,7 @@ class PostListScreen extends StatelessWidget {
                 },
               );
             } else if (state is PostsError) {
-              return Center(child: Text(state.message));
+              return Center(child: Text('Error: ${state.message}', style: TextStyle(color: Colors.red)));
             }
             return Container();
           },

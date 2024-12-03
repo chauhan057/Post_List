@@ -12,9 +12,8 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       emit(PostsLoading());
       try {
         final posts = await apiService.fetchPosts();
-        // Include the random timer duration in each post.
         final postsWithTimers = posts.map((post) {
-          return post.copyWith(timerDuration: 10 + (new DateTime.now().millisecondsSinceEpoch % 15) % 10); // random duration
+          return post.copyWith(timerDuration: 10 + (new DateTime.now().millisecondsSinceEpoch % 15) % 10);
         }).toList();
         emit(PostsLoaded(posts: postsWithTimers));
       } catch (e) {
@@ -37,5 +36,3 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     });
   }
 }
-
-
