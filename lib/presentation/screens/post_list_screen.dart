@@ -12,8 +12,11 @@ class PostListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Posts")),
-      body: BlocProvider(
+      appBar: AppBar(
+        title: Text('Posts',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+        elevation: 0,
+        backgroundColor: Colors.blueAccent,
+      ),      body: BlocProvider(
         create: (context) => PostsBloc(ApiService())..add(FetchPosts()),
         child: BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
@@ -39,42 +42,66 @@ class PostListScreen extends StatelessWidget {
                     child: Card(
                       color: post.read ? Colors.white : Colors.yellow[100],
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                      elevation: 4,
+                      elevation: 8,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Colors.grey[300]!, width: 1),
                       ),
-                      child: ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(child: Text(post.title)),
-                            Row(
-                              children: [
-                                Icon(Icons.timer, color: Colors.blue, size: 20),
-                                SizedBox(width: 5),
-                                Text(
-                                    '${post.timerDuration - post.timerController.elapsedTime}s',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
+                      child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                post.title,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                                maxLines: 1,
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.timer, color: Colors.blue, size: 20),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '${post.timerDuration - post.timerController.elapsedTime}s',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blue,
+                                        ),
+
+                                      ),
+                                    ],
+                                  ),
+                                  if (!post.read)
+                                    Icon(
+                                      Icons.notifications_active,
+                                      color: Colors.orange,
+                                      size: 24,
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            context.read<PostsBloc>().add(MarkPostAsRead(post.id));
+                            post.timerController.pause();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PostDetailScreen(postId: post.id),
+                              ),
+                            );
+                          },
                         ),
-                        onTap: () {
-                          context
-                              .read<PostsBloc>()
-                              .add(MarkPostAsRead(post.id));
-
-                          post.timerController.pause();
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PostDetailScreen(postId: post.id),
-                            ),
-                          );
-                        },
                       ),
                     ),
                   );
