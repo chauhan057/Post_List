@@ -6,7 +6,7 @@ A Flutter app that displays a list of posts fetched from an API with a timer for
 
 - **Mark as Read**: When a user clicks on a list item then set the tileColor to white if the post is marked as read.
 - **Timer Functionality**: Each post has a timer that starts when visible and pauses when it's scrolled out of view or the user navigates away.
-- **Timer Icon**: Each post has a timer icon with random int value in seconds.
+- **Timer Icon**: Each post has a timer icon with random int value(seconds).
 ## Libraries Used
 
 - **flutter_bloc**: For state management.
