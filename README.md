@@ -1,16 +1,22 @@
-# task1_knovator
+# Flutter App with BLoC and Architecture
 
-A new Flutter project.
+A Flutter app that displays a list of posts fetched from an API with a timer for each post. The timer starts when the post appears, pauses when the item is scrolled away, and resumes when it reappears. The app also includes a splash screen.
 
-## Getting Started
+## Features 
 
-This project is a starting point for a Flutter application.
+- **Mark as Read**: When a user clicks on a list item then set the tileColor to white if the post is marked as read.
+- **Timer Functionality**: Each post has a timer that starts when visible and pauses when it's scrolled out of view or the user navigates away.
+- **Timer Icon**: Each post has a timer icon with random int value in seconds.
+## Libraries Used
 
-A few resources to get you started if this is your first Flutter project:
+- **flutter_bloc**: For state management.
+- **provider**: To manage timer state.
+- **visibility_detector**: To track visibility of posts for timer control.
+- **http**: To fetch data from the API.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Steps to clone this project
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone this repository to your local machine:
+   ```bash
+   git clone https://github.com/chauhan057/Post_List.git
+   cd Post_List
